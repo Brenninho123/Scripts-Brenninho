@@ -117,6 +117,6 @@ local Credits = { -- [[ ik wierd way to do this ]] --
 }
 
 function onSongStart()
-	if getPropertyFromClass('states.PlayState', 'chartingMode') then
+	if getPropertyFromClass('states.PlayState', 'data.chartingMode') then
 	end
 end

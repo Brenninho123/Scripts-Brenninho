@@ -1,4 +1,4 @@
---script by ImaginationSuperHero52806
+--script by ImaginationSuperHero52806 and Support By Brenninho840
 
 --[[Settings... cause why not?]]--
 
@@ -24,7 +24,7 @@ local tweenType
 local isPixelStage
 local isSustainNote
 function onCreatePost()
-    isPixelStage = getPropertyFromClass('PlayState', 'isPixelStage')
+    isPixelStage = setPropertyFromClass('states.PlayState', 'isPixelStage')
     for i = 0, 3 do
         strumLinePlayer = getPropertyFromGroup('strumLineNotes', i + 4, 'y')
         strumLineOpponent = getPropertyFromGroup('strumLineNotes', i, 'y')
@@ -117,6 +117,6 @@ local Credits = { -- [[ ik wierd way to do this ]] --
 }
 
 function onSongStart()
-	if getPropertyFromClass('PlayState', 'chartingMode') then
+	if getPropertyFromClass('states.PlayState', 'chartingMode') then
 	end
 end

@@ -17,7 +17,9 @@ local strumLinePlayer
 local strumLineOpponent
 local sicks
 local goods
-local moveAmount
+local bads
+local shits
+local moveAmount = 25
 local tweenAmount
 local tweenType
 --local tweenBackType
@@ -34,20 +36,33 @@ function onCreatePost()
     end
     sicks = getProperty("sicks")
     goods = getProperty("goods")
+    bads = getProperty("bads")
+    shits = getProperty("shits")
 end
 
 function onUpdatePost(elapsed)
-	--tweenBackType = prefs.tweenHeld
-    if prefs.shouldPixelMove and isPixelStage then
-        moveAmount = (downscroll and (prefs.move / 2) or (prefs.move / -2))
-        tweenAmount = (scrollSpeed / curBpm) * (moveAmount / 7)
-        tweenType = prefs.tweenPixel
-    elseif isPixelStage == false then
-        moveAmount = (downscroll and prefs.move or (prefs.move / -1))
-        tweenAmount = (scrollSpeed / curBpm) * (moveAmount / 5)
-        tweenType = prefs.tween
+    if downscroll then
+        if sicks then
+            moveAmount = 25
+        elseif goods then
+            moveAmount = 15
+        elseif bads then
+            moveAmount = 10
+        elseif shits then
+            moveAmount = 5
+        end
+    else
+        if sicks then
+            moveAmount = -25
+        elseif goods then
+            moveAmount = -15
+        elseif bads then
+            moveAmount = -10
+        elseif shits then
+            moveAmount = -5
+--debugPrint(moveAmount .. ' ' .. tweenAmount .. ' ' .. curBpm)
+        end
     end
-    --debugPrint(moveAmount .. ' ' .. tweenAmount .. ' ' .. curBpm)
 end
 
 function onCountdownTick(counter)
@@ -73,20 +88,18 @@ end
 
 function goodNoteHit(id, noteData, noteType, isSustainNote)
     for i = 0, 3 do
-        if prefs.onSickHit and sicks or goods then
-            if noteData == i then
-                noteTweenY('movePlayer' .. i, i + 4, strumLinePlayer + moveAmount, tweenAmount, tweenType)
-                runTimer('returnPlayer' .. i, 0.1, 1)
-            end
+             if noteData == i and not isSustainNote then
+            noteTweenY('movePlayer' .. i, i + 4, strumLinePlayer + moveAmount, -1, 'circOut')
+            runTimer('returnPlayer' .. i, 0.1, -2)
         end
     end
 end
 
 function opponentNoteHit(id, noteData, noteType, isSustainNote)
     for i = 0, 3 do
-        if noteData == i then
-            noteTweenY('moveOpponent' .. i, i, strumLineOpponent + moveAmount, tweenAmount, tweenType)
-            runTimer('returnOpponent' .. i, 0.1, 1)
+        if noteData == i and not isSustainNote then
+            noteTweenY('moveOpponent' .. i, i, strumLineOpponent + moveAmount, -1, 'circOut')
+            runTimer('returnOpponent' .. i, 0.1, -2)
         end
     end
 end
@@ -94,22 +107,12 @@ end
 function onTimerCompleted(tag, loop, loopsLeft)
     for i = 0, 3 do
         if tag == 'returnPlayer' .. i then
-            --[[if isSustainNote then
-                noteTweenY('movePlayer' .. i, i + 4, strumLinePlayer, tweenAmount * 5, tweenBackType)
-            else]]
-                noteTweenY('movePlayer' .. i, i + 4, strumLinePlayer, tweenAmount, tweenType)
-            --end
+            noteTweenY('movePlayer' .. i, i + 4, strumLinePlayer, 0.2, 'circOut')
         elseif tag == 'returnOpponent' .. i then
-            --[[if isSustainNote then
-                noteTweenY('moveOpponent' .. i, i, strumLineOpponent, tweenAmount * 5, tweenBackType)
-            else]]
-                noteTweenY('moveOpponent' .. i, i, strumLineOpponent, tweenAmount, tweenType)
-            --end
+            noteTweenY('moveOpponent' .. i, i, strumLineOpponent, 0.2, 'circOut')
         end
     end
 end
-
-
 
 local Credits = { -- [[ ik wierd way to do this ]] --
 	WIP = 'Script Creator', -- 'WIP Mod Maker/Modifier'
@@ -117,6 +120,6 @@ local Credits = { -- [[ ik wierd way to do this ]] --
 }
 
 function onSongStart()
-	if setPropertyFromClass('states.PlayState', 'data.chartingMode') then
+	if setPropertyFromClass('states.PlayState', 'chartingMode') then
 	end
 end

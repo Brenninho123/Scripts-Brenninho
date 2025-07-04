@@ -76,7 +76,7 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
         if prefs.onSickHit and sicks or goods then
             if noteData == i then
                 noteTweenY('movePlayer' .. i, i + 4, strumLinePlayer + moveAmount, tweenAmount, tweenType)
-                runTimer('returnPlayer' .. i, tweenAmount, 1)
+                runTimer('returnPlayer' .. i, 0.1, 1)
             end
         end
     end
@@ -86,7 +86,7 @@ function opponentNoteHit(id, noteData, noteType, isSustainNote)
     for i = 0, 3 do
         if noteData == i then
             noteTweenY('moveOpponent' .. i, i, strumLineOpponent + moveAmount, tweenAmount, tweenType)
-            runTimer('returnOpponent' .. i, tweenAmount, 1)
+            runTimer('returnOpponent' .. i, 0.1, 1)
         end
     end
 end

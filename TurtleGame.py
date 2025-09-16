@@ -1,4 +1,5 @@
 import turtle
+import t
 
 def draw_square(t, size):
 
@@ -6,3 +7,4 @@ def draw_square(t, size):
     t.forward(size)
     t.right(90)
     t.backward(size)
+    t.left(90)

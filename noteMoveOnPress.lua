@@ -3,13 +3,14 @@
 --[[Settings... cause why not?]]--
 
 local prefs = {
-	move = 25, -- How much the note should move (if a pixel stage its divided by 2)
+	move = 20, -- How much the note should move (if a pixel stage its divided by 2)
 	shouldPixelMove = true, -- Should pixel have its own stuff
 	tween = 'circOut', -- Pick a tween ig
 	tweenPixel = 'sineOut', -- Pixel if you want to
 	--tweenHeld = 'quadIn', -- When it returns after being held, also no pixel var cause lazy
 	wierdStupidKindaDumb = true, -- Basically a wierd Countdown thing WIP added
 	onSickHit = true -- When on when you don't get get a sick or good the tween doesn't play (doesn't work right now)
+	onGoodHit = true -- When on you don't get a good
 }
 
 --[[For new coders I recommend you don't touch the code below!]]--

@@ -8,3 +8,7 @@ def draw_square(t, size):
     t.right(90)
     t.backward(size)
     t.left(90)
+    t.forward(size)
+    t.right(40)
+    t.backward(80)
+    t.left(120)
